@@ -3,6 +3,7 @@ from pyrogram.types import InlineKeyboardMarkup , InlineKeyboardButton
 from info import ADMINS , START_IMG
 import re
 from database.users_chats_db import db
+
 @Client.on_message(filters.command("post_mode") & filters.user(ADMINS))
 async def update_post_mode(client, message):
     try:
@@ -47,6 +48,7 @@ async def del_muc_id(client, message):
     except Exception as e:
         print('Err in del_muc_id', e)
         await message.reply("Failed to delete movies channel id!")
+        
 @Client.on_message(filters.command("stream") & filters.user(ADMINS))
 async def set_stream_link(client, message):
     try:
@@ -55,9 +57,9 @@ async def set_stream_link(client, message):
             await db.set_stream_link(link)
             await message.reply("Successfully set stream link!")
         else:
-            await message.reply("Usage: /stream https://t.me/SB_Botz_Update or https://t.me/SB_Botz_Update")
+            await message.reply("Usage: /stream https://t.me/bots_office")
     except IndexError:
-        await message.reply("Usage: /stream https://t.me/SB_Botz_Update or https://t.me/SB_Botz_Update")
+        await message.reply("Usage: /stream https://t.me/bots_office")
         return
 
 
@@ -88,17 +90,17 @@ def checkIfLinkIsValid(link):
 @Client.on_message(filters.command("m_grp") & filters.user(ADMINS))
 async def m_grp(client, message):
     links = []
-    link = await client.ask(message.chat.id ,"send me your pm search grp link or send /skiplink to skip , default is bisal_files")
+    link = await client.ask(message.chat.id ,"send me your pm search grp link or send /skiplink to skip")
     if link.text == "/skiplink":
-        links.append("https://t.me/bisal_files")
+        links.append("https://t.me/bots_office")
     else:
         if checkIfLinkIsValid(link.text):
             links.append(link.text)
         else:
             await message.reply("Invalid link")
-    link1 = await client.ask(message.chat.id ,"send me your movies grp link or send /skiplink to skip . default is bisal_files")
+    link1 = await client.ask(message.chat.id ,"send me your movies grp link or send /skiplink to skip")
     if link1.text == "/skiplink":
-        links.append("https://t.me/bisal_files")
+        links.append("https://t.me/bots_office")
     else:
         if checkIfLinkIsValid(link1.text):
             links.append(link1.text)
